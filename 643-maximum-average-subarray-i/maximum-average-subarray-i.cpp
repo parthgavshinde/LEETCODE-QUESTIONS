@@ -9,12 +9,12 @@ public:
             sum = sum +nums[i];
             if(i>=k-1)
             {
-                double avg  = sum/k;
-                maxi = max(maxi,avg);
+                
+                maxi = max(maxi,sum);
                 sum = sum - nums[first];
                 first = first+  1;
             }
         }
-        return maxi;
+        return maxi/k;
     }
 };
