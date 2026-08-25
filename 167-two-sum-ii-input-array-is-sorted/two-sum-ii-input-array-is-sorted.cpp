@@ -13,8 +13,9 @@ public:
             {
                 ans.push_back(i+1);
                 ans.push_back(1+j);
+                return ans;
             }
-            if(sum<target)
+            else if(sum<target)
             {
                 i++;
             }
