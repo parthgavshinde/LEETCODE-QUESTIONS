@@ -14,35 +14,7 @@ public:
                 left = mid + 1;
             }
         }
-        if(left<nums.size())
-        {
-        if(nums[left]>target )
-        {
-            if(right>=0)
-            {
-                if(nums[right]<target)
-                {
-                    return left;
-                }
-                else return 0;
-            }
-            else
-            {
-                return left;
-            }
-            
-        }
-        else
-        {
-            return right;
-        }
-        }
-        else
-        {
-            return left;
-        }
-
-    return 0 ; 
+     return left;
     }
     
 }
