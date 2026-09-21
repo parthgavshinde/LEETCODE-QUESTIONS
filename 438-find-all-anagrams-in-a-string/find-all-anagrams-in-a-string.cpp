@@ -1,29 +1,18 @@
 class Solution {
 public:
     vector<int> findAnagrams(string s, string p) {
-        vector<int> freq(26, 0);
+        vector<int> freq(26,0);
         vector<int> answer;
-        
-        int n = s.length();
-        int m = p.length();
-
-        // Edge case handling
-        if (n < m) return answer;
-
-        // Count frequencies of p
-        for (int i = 0; i < m; i++) {
-            freq[p[i] - 'a']++;
+        if(s.length()<p.length()) return answer;
+        for(int i=0;i<p.length();i++){
+            freq[p[i]-'a']++;
         }
-
-        // Check every window of size m
-        for (int i = 0; i <= n - m; i++) {
-            vector<int> check(26, 0);
-            for (int j = 0; j < m; j++) {
-                check[s[i + j] - 'a']++; // Fix: s[i + j] badalkar current window ko count karega
+        for(int i=0;i<=s.length() - p.length();i++){
+            vector<int> check(26,0);
+            for(int j=0;j<p.length();j++){
+               check[s[i+j]-'a']++;
             }
-            if (check == freq) {
-                answer.push_back(i);
-            }
+            if(check==freq) answer.push_back(i);
         }
         return answer;
     }
