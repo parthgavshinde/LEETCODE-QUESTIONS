@@ -1,56 +1,41 @@
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode() : val(0), next(nullptr) {}
- *     ListNode(int x) : val(x), next(nullptr) {}
- *     ListNode(int x, ListNode *next) : val(x), next(next) {}
- * };
- */
 class Solution {
 public:
     ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-        if(list1 == nullptr && list2 == nullptr) return nullptr;
-        if(list1==nullptr) return list2;
-        if(list2==nullptr) return list1; 
+        // Base cases
+        if (list1 == nullptr) return list2;
+        if (list2 == nullptr) return list1; 
+
+        // Ek dummy node banayein jo merged list ke starting se pehle rahega
+        ListNode* dummy = new ListNode(0);
+        ListNode* current = dummy; // Isko use karke hum list aage badhayenge
 
         ListNode* left = list1;
         ListNode* right = list2;
-        ListNode* headp ;
-        if(left->val <= right->val) headp = left;
-        else headp = right;
-       
-       ListNode* dummy = new ListNode(0);
 
-        while(left!=nullptr && right!=nullptr)
-        {
-
-             if(left->val <= right->val)
-            {
-                dummy->next = left ;
-                dummy = dummy->next;
+        // Jab tak dono list mein elements hain
+        while (left != nullptr && right != nullptr) {
+            if (left->val <= right->val) {
+                current->next = left;
                 left = left->next;
-            }
-            else if(left->val > right->val)
-            {
-                dummy->next = right ;
-                dummy = dummy->next;
+            } else {
+                current->next = right;
                 right = right->next;
             }
+            current = current->next;
         }
-        while(left!=nullptr)
-        {
-            dummy->next = left ;
-            left = left->next;
-            dummy=dummy->next;
+
+        // Jo list bach gayi hai (left ya right), usko seedha attach kar dein
+        if (left != nullptr) {
+            current->next = left;
+        } 
+        if (right != nullptr) {
+            current->next = right;
         }
-        while(right!=nullptr)
-        {
-            dummy->next = right ;
-            right = right->next;
-            dummy=dummy->next;
-        }
-        return headp;
+
+        // Asli head dummy->next par hai
+        ListNode* result = dummy->next;
+        delete dummy; // C++ mein memory leak bachane ke liye (optional in LeetCode but good practice)
+        
+        return result;
     }
 };
