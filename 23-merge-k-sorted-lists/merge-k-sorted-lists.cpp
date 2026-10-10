@@ -9,7 +9,7 @@
  * };
  */
 class Solution {
-    // Custom comparator to make the priority queue a min-heap
+    // 1. You must define the 'compare' struct for the priority queue
     struct compare {
         bool operator()(const ListNode* l, const ListNode* r) {
             return l->val > r->val; 
@@ -18,33 +18,29 @@ class Solution {
 
 public:
     ListNode* mergeKLists(vector<ListNode*>& lists) {
-        // Initialize min-heap with the custom comparator
         priority_queue<ListNode*, vector<ListNode*>, compare> pq;
-        
-        // Push the head of each non-empty list into the priority queue
-        for (ListNode* node : lists) {
-            if (node != nullptr) {
-                pq.push(node);
-            }
+
+        for(ListNode* node : lists)
+        {
+            if(node != nullptr) pq.push(node);
         }
-        
-        // Dummy node to easily build the result list
-        ListNode dummy(0);
-        ListNode* tail = &dummy;
-        
-        // Extract the minimum node and push its next node back into the queue
-        while (!pq.empty()) {
+
+        ListNode* dummy = new ListNode(0);
+        ListNode* tail = dummy;
+
+        while(!pq.empty())
+        {
             ListNode* smallest = pq.top();
             pq.pop();
-            
             tail->next = smallest;
             tail = tail->next;
-            
-            if (smallest->next != nullptr) {
+            if(smallest->next != nullptr)
+            {
                 pq.push(smallest->next);
             }
         }
         
-        return dummy.next; // Corrected line
+        // 2. Change 'head->next' to 'dummy->next'
+        return dummy->next; 
     }
-}; // Added missing semicolon
+};
