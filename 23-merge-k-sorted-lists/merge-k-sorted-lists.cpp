@@ -10,11 +10,13 @@
  */
 class Solution {
     // 1. You must define the 'compare' struct for the priority queue
-    struct compare {
-        bool operator()(const ListNode* l, const ListNode* r) {
-            return l->val > r->val; 
-        }
-    };
+struct compare
+{
+    bool operator()(const ListNode* l, const ListNode* r)
+    {
+        return l->val>r->val;
+    }
+};
 
 public:
     ListNode* mergeKLists(vector<ListNode*>& lists) {
