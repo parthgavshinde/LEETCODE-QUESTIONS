@@ -10,7 +10,7 @@ public:
         while (true) {
             // Find the k-th node from prevGroupTail
             ListNode* kth = prevGroupTail;
-            for (int i = 0; i < k && kth != nullptr; ++i) {
+            for (int i = 0; i < k && kth != nullptr; i++) {
                 kth = kth->next;
             }
             
