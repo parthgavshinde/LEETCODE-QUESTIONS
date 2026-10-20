@@ -3,7 +3,7 @@ public:
     void helper(vector<int>& nums, vector<int>& a, vector<vector<int>>& ans, int idx) {
         ans.push_back(a);
         
-        for (int i = idx; i < nums.size(); ++i) {
+        for (int i = idx; i < nums.size(); i++) {
             // Skip duplicates at the same level of the recursion tree
             if (i > idx && nums[i] == nums[i - 1]) {
                 continue;
