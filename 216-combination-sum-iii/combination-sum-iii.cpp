@@ -1,7 +1,6 @@
 class Solution {
 public:
     void  helper(int k,int target,vector<vector<int>>&ans,vector<int> &temp,int idx,int v){
-        if(target<0) return ;
         if(v==k)
         {
             if(target==0)
@@ -12,7 +11,7 @@ public:
         }
         for(int i = idx; i<=9; i++)
         {
-            
+            if(target-i<0) break;
             temp.push_back(i);
             helper(k,target-i,ans,temp,i+1,v+1);
             temp.pop_back();
