@@ -1,51 +1,31 @@
 class Solution {
 public:
-
-    bool isValid(string temp)
-    {
-        stack<int> st;
-
-        for(int i = 0 ; i<temp.size(); i++)
-        {
-            if(temp[i]=='(')
-            {
-                st.push(temp[i]);
-            }
-            else if(temp[i]==')')
-            {
-                if(st.empty())
-                {
-                    return false ;
-                }
-                st.pop();
-            }
-        }
-        return st.empty() ;
-    }
-    void helper(vector<string>& ans, int& n, string& temp, int count) {
+    void helper(vector<string>& ans, int n, string& temp, int open, int close) {
+        // Base case: string is complete
         if (temp.size() == n * 2) {
-            if (isValid(temp)) {
-                ans.push_back(temp);
-               
-            }
-             return;
+            ans.push_back(temp);
+            return;
         }
 
-        temp.push_back('(');
+        // We can add an opening bracket if we haven't used all 'n' of them
+        if (open < n) {
+            temp.push_back('(');
+            helper(ans, n, temp, open + 1, close);
+            temp.pop_back(); // backtrack
+        }
 
-        helper(ans, n, temp, count);
-
-        temp.pop_back();
-        temp.push_back(')');
-        helper(ans, n, temp, count);
-        temp.pop_back();
+        // We can add a closing bracket only if we have more open than close brackets
+        if (close < open) {
+            temp.push_back(')');
+            helper(ans, n, temp, open, close + 1);
+            temp.pop_back(); // backtrack
+        }
     }
+
     vector<string> generateParenthesis(int n) {
         vector<string> ans;
-        string t = "";
-        int count = 0;
-        helper(ans, n, t, count);
-
+        string temp = "";
+        helper(ans, n, temp, 0, 0); // Track open and close bracket counts
         return ans;
     }
 };
