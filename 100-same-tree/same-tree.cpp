@@ -12,27 +12,19 @@
  */
 class Solution {
 public:
-    
     bool helper(TreeNode* p, TreeNode* q) {
         if (p == nullptr && q == nullptr) {
-            
-            return true ;
+
+            return true;
         }
-        if (p != nullptr && q == nullptr || p == nullptr && q != nullptr) {
-           
+        if (p == nullptr || q == nullptr)
+            return p == q;
+        if (p->val != q->val) {
+
             return false;
         }
-        if (p->val != q->val) {
-            
-            return false ; 
-        }
 
-        if (helper(p->left, q->left)==false) return false;
-        if (helper(p->right, q->right)==false) return false;
-
-        return true ; 
+        return helper(p->left,q->left) && helper(p->right,q->right);
     }
-    bool isSameTree(TreeNode* p, TreeNode* q) {
-        return helper(p,q);
-    }
+    bool isSameTree(TreeNode* p, TreeNode* q) { return helper(p, q); }
 };
