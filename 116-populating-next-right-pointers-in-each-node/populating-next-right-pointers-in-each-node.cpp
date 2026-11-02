@@ -1,45 +1,31 @@
-/*
-// Definition for a Node.
-class Node {
-public:
-    int val;
-    Node* left;
-    Node* right;
-    Node* next;
-
-    Node() : val(0), left(NULL), right(NULL), next(NULL) {}
-
-    Node(int _val) : val(_val), left(NULL), right(NULL), next(NULL) {}
-
-    Node(int _val, Node* _left, Node* _right, Node* _next)
-        : val(_val), left(_left), right(_right), next(_next) {}
-};
-*/
-
 class Solution {
 public:
     Node* connect(Node* root) {
-        if(root==nullptr)return nullptr;
-        queue<Node*> q;
-        q.push(root);
-        while(!q.empty())
-        {
-            int n = q.size();
-            for(int i =0 ; i<n; i++)
-            {
-                auto temp = q.front();
-                q.pop();
-                if(i==n-1){
-                    temp->next = nullptr ;
+        if (!root) return nullptr;
+        
+        Node* head = root; // The left-most node of the current level
+        
+        while (head != nullptr) {
+            Node* dummy = new Node(0);
+            Node* temp = dummy;
+            
+            // Traverse the current level using the 'next' pointers
+            for (Node* curr = head; curr != nullptr; curr = curr->next) {
+                if (curr->left != nullptr) {
+                    temp->next = curr->left;
+                    temp = temp->next;
                 }
-                else
-                {
-                    temp->next = q.front();
+                if (curr->right != nullptr) {
+                    temp->next = curr->right;
+                    temp = temp->next;
                 }
-                if(temp->left!=nullptr) q.push(temp->left);
-                if(temp->right!=nullptr) q.push(temp->right);
             }
+            
+            // Move to the next level
+            head = dummy->next;
+            delete dummy; // Clean up dummy node
         }
-        return root ; 
+        
+        return root;
     }
 };
