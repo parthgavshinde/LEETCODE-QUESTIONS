@@ -16,8 +16,8 @@ public:
         if (root == NULL)
             return {};
         vector<vector<int>> ans;
-        deque<TreeNode*> q;
-        q.push_back(root);
+        queue<TreeNode*> q;
+        q.push(root);
         int j = 1;
         while (!q.empty()) {
 
@@ -26,7 +26,7 @@ public:
             for (int i = 0; i < n; i++) {
 
                 auto temp = q.front();
-                q.pop_front();
+                q.pop();
                 if(j%2!=0)
                 {
                     curr[i]=temp->val;
@@ -35,8 +35,8 @@ public:
                 {
                     curr[n-i-1] = temp->val;
                 }
-                if(temp->left!=NULL)q.push_back(temp->left);
-                if(temp->right!=NULL)q.push_back(temp->right);
+                if(temp->left!=NULL)q.push(temp->left);
+                if(temp->right!=NULL)q.push(temp->right);
 
             }
             j++;
