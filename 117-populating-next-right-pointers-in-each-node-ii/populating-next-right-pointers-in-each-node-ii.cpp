@@ -1,44 +1,30 @@
-/*
-// Definition for a Node.
-class Node {
-public:
-    int val;
-    Node* left;
-    Node* right;
-    Node* next;
-
-    Node() : val(0), left(NULL), right(NULL), next(NULL) {}
-
-    Node(int _val) : val(_val), left(NULL), right(NULL), next(NULL) {}
-
-    Node(int _val, Node* _left, Node* _right, Node* _next)
-        : val(_val), left(_left), right(_right), next(_next) {}
-};
-*/
-
 class Solution {
 public:
     Node* connect(Node* root) {
-        if (root == nullptr)
-            return nullptr;
-        queue<Node*> q;
-        q.push(root);
-        while (!q.empty()) {
-            int n = q.size();
-            for (int i = 0; i < n; i++) {
-                auto temp = q.front();
-                q.pop();
-                if (i == n - 1) {
-                    temp->next = nullptr;
-                } else {
-                    temp->next = q.front();
+        Node* curr = root;
+        
+        // Traverse down the tree level by level
+        while (curr != nullptr) {
+            Node dummy(0);      // Acts as the head before the next level
+            Node* tail = &dummy; // Used to build the next level's linked list
+            
+            // Traverse across the current level
+            while (curr != nullptr) {
+                if (curr->left != nullptr) {
+                    tail->next = curr->left;
+                    tail = tail->next;
                 }
-                if (temp->left != nullptr)
-                    q.push(temp->left);
-                if (temp->right != nullptr)
-                    q.push(temp->right);
+                if (curr->right != nullptr) {
+                    tail->next = curr->right;
+                    tail = tail->next;
+                }
+                curr = curr->next;
             }
+            
+            // Move to the first node of the next level
+            curr = dummy.next;
         }
+        
         return root;
     }
 };
