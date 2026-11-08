@@ -12,22 +12,24 @@
  */
 class Solution {
 public:
-    void helper(TreeNode* root, set<int>& ans) {
+    int a = 0 ; 
+    void helper(TreeNode* root,int k ,int &counter) {
         if (root == nullptr)
             return;
 
-        ans.insert(root->val);
-        helper(root->left, ans);
-        helper(root->right, ans);
+
+        helper(root->left, k,counter);
+        counter += 1 ;
+        if(counter == k)
+        {
+            a = root->val ; 
+            return ;
+        }
+        helper(root->right,k,counter);
     }
     int kthSmallest(TreeNode* root, int k) {
-        set<int> ans;
-        helper(root, ans);
-
-        auto it = std::next(ans.begin(), k-1);
-
-        return *it;
-
-
+        int counter = 0 ; 
+        helper(root,k,counter);
+        return a ; 
     }
 };
